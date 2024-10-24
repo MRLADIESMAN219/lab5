@@ -16,14 +16,14 @@ namespace Lab05.BUS
         {
             using (var context = new StudentDB())
             {
-                return context.Students
+    return context.Students
                               .Include(s => s.Faculty) 
                               .Include(s => s.Major)   
                               .ToList();
             }
         }
 
-        public List<Student> GetAllHasNoMajor()
+public List<Student> GetAllHasNoMajor()
         {
             using (var context = new StudentDB())
             {
@@ -33,8 +33,7 @@ namespace Lab05.BUS
                               .ToList();
             }
         }
-
-        public List<Student> GetAllHasNoMajor(int facultyID)
+public List<Student> GetAllHasNoMajor(int facultyID)
         {
             using (var context = new StudentDB())
             {
@@ -54,8 +53,7 @@ namespace Lab05.BUS
                               .FirstOrDefault(p => p.StudentID == studentId);
             }
         }
-
-        public void InsertUpdate(Student s)
+ public void InsertUpdate(Student s)
         {
             using (var context = new StudentDB())
             {
@@ -71,7 +69,7 @@ namespace Lab05.BUS
                 context.SaveChanges();
             }
         }
-        public void DeleteStudent(string studentId)
+ public void DeleteStudent(string studentId)
         {
             using (var context = new StudentDB())
             {
@@ -92,7 +90,7 @@ namespace Lab05.BUS
                 }
             }
         }
-        public List<Student> GetStudentsWithoutMajor(int facultyID)
+public List<Student> GetStudentsWithoutMajor(int facultyID)
         {
             using (var context = new StudentDB())
             {
@@ -102,7 +100,7 @@ namespace Lab05.BUS
             }
         }
 
-        public List<Major> GetMajorsByFaculty(int facultyID)
+ public List<Major> GetMajorsByFaculty(int facultyID)
         {
             using (var context = new StudentDB())
             {
@@ -111,8 +109,7 @@ namespace Lab05.BUS
                               .ToList();
             }
         }
-
-        public void RegisterMajor(string studentID, int majorID)
+ public void RegisterMajor(string studentID, int majorID)
         {
             using (var context = new StudentDB())
             {
