@@ -33,50 +33,7 @@ public List<Student> GetAllHasNoMajor()
                               .ToList();
             }
         }
-public List<Student> GetAllHasNoMajor(int facultyID)
-        {
-            using (var context = new StudentDB())
-            {
-                return context.Students
-                              .Where(p => p.MajorID == null && p.FacultyID == facultyID)
-                              .Include(s => s.Faculty)  
-                              .Include(s => s.Major)   
-                              .ToList();
-            }
-        }
-
-        public Student FindById(string studentId)
-        {
-            using (var context = new StudentDB())
-            {
-                return context.Students
-                              .FirstOrDefault(p => p.StudentID == studentId);
-            }
-        }
- public void InsertUpdate(Student s)
-        {
-            using (var context = new StudentDB())
-            {
-                var existingStudent = context.Students.Find(s.StudentID);
-                if (existingStudent != null)
-                {
-                    context.Entry(existingStudent).CurrentValues.SetValues(s);
-                }
-                else
-                {
-                    context.Students.Add(s); 
-                }
-                context.SaveChanges();
-            }
-        }
- public void DeleteStudent(string studentId)
-        {
-            using (var context = new StudentDB())
-            {
-                var studentToRemove = context.Students.Find(studentId);
-                if (studentToRemove == null)
-                {
-                    throw new Exception("Sinh viên không tồn tại.");
+public List<Student> GetAlviên.");
                 }
 
                 context.Students.Remove(studentToRemove);
@@ -86,7 +43,7 @@ public List<Student> GetAllHasNoMajor(int facultyID)
                 }
                 catch (DbUpdateException ex)
                 {
-                    throw new Exception("Lỗi khi xóa sinh viên. Vui lòng thử lại sau.", ex);
+                    throw new Exception("Lỗi  xóa sinh viên.  thử lại sau.", ex);
                 }
             }
         }
