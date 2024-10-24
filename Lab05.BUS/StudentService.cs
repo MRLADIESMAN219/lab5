@@ -1,6 +1,8 @@
+﻿using Lab05.DAL;
 using Lab05.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
@@ -15,8 +17,8 @@ namespace Lab05.BUS
             using (var context = new StudentDB())
             {
                 return context.Students
-                              .Include(s => s.Faculty) 
-                              .Include(s => s.Major)   
+                              .Include(s => s.Faculty)
+                              .Include(s => s.Major)
                               .ToList();
             }
         }
@@ -27,7 +29,7 @@ namespace Lab05.BUS
             {
                 return context.Students
                               .Where(s => s.MajorID == null)
-                              .Include(s => s.Faculty) 
+                              .Include(s => s.Faculty)
                               .ToList();
             }
         }
@@ -56,9 +58,9 @@ namespace Lab05.BUS
             {
                 if (s.MajorID == -1)
                 {
-                    s.MajorID = null; 
+                    s.MajorID = null;
                 }
-                context.Students.AddOrUpdate(s); 
+                context.Students.AddOrUpdate(s);
                 context.SaveChanges();
             }
         }
@@ -78,7 +80,7 @@ namespace Lab05.BUS
                 }
             }
         }
-   public List<Major> GetMajorsByFaculty(int facultyID)
+        public List<Major> GetMajorsByFaculty(int facultyID)
         {
             using (var context = new StudentDB())
             {
@@ -95,7 +97,7 @@ namespace Lab05.BUS
                 var student = context.Students.Find(studentID);
                 if (student != null)
                 {
-                    student.MajorID = majorID; 
+                    student.MajorID = majorID;
                     context.SaveChanges();
                 }
             }
