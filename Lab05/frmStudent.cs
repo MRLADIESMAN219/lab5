@@ -248,38 +248,47 @@ namespace Lab05
                 }
             }
         }
-        private void btnDeleteStudent_Click(object sender, EventArgs e)
+      private void btnDeleteStudent_Click(object sender, EventArgs e)
+{
+    if (string.IsNullOrEmpty(txtIdStudent.Text))
+    {
+        MessageBox.Show("Vui lòng chọn sinh viên cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return;
+    }
+
+    var confirmResult = MessageBox.Show(
+        "Bạn có chắc chắn muốn xóa sinh viên này?",
+        "Xác nhận xóa",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question);
+
+    if (confirmResult == DialogResult.Yes)
+    {
+        try
         {
-            if (string.IsNullOrEmpty(txtIdStudent.Text))
+            var studentToDelete = studentService.FindById(txtIdStudent.Text); // Tìm sinh viên
+            if (studentToDelete != null)
             {
-                MessageBox.Show("Vui lòng chọn sinh viên cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var confirmResult = MessageBox.Show(
-                "Bạn có chắc chắn muốn xóa sinh viên này?",
-                "Xác nhận xóa",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (confirmResult == DialogResult.Yes)
-            {
-                try
-                {
-                    studentService.DeleteStudent(txtIdStudent.Text);
-                    MessageBox.Show("Sinh viên đã được xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadStudentData(); 
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                studentService.Delete(studentToDelete); // Truyền đối tượng Student vào Delete
+                MessageBox.Show("Sinh viên đã được xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadStudentData(); // Cập nhật lại dữ liệu
             }
             else
             {
-                MessageBox.Show("Sinh viên chưa được xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Không tìm thấy sinh viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+    else
+    {
+        MessageBox.Show("Sinh viên chưa được xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+}
+
 
         private void btnexits_Click(object sender, EventArgs e)
         {
