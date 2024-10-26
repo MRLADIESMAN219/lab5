@@ -17,6 +17,7 @@ namespace Lab05
         private readonly StudentService studentService = new StudentService();
         private readonly FacultyService facultyService = new FacultyService();
         private readonly MajorService majorService = new MajorService();
+
         public frmRegisterMajor()
         {
             InitializeComponent();
@@ -32,16 +33,19 @@ namespace Lab05
                 var listMajor = majorService.GetAllByFaculty(selectedFaculty.FacultyID);
                 FillMajorCombobox(listMajor);  
 
-                var listStudents = studentService.GetAllHasNoMajor(selectedFaculty.FacultyID);
+                // Sử dụng phương thức có tham số facultyID
+                var listStudents = studentService.GetStudentsWithoutMajor(selectedFaculty.FacultyID);
                 BindGrid(listStudents);
             }
         }
+
         private void FillMajorCombobox(List<Major> listMajors)
         {
             cmbMajor.DataSource = listMajors;
             cmbMajor.DisplayMember = "Name";  
             cmbMajor.ValueMember = "MajorID"; 
         }
+
         private void BindGrid(List<Student> listStudents)
         {
             dgvInformationStudentRegister.Rows.Clear(); 
@@ -97,6 +101,7 @@ namespace Lab05
             int selectedFacultyID = (int)cmbFaculty.SelectedValue;
             BindGrid(studentService.GetStudentsWithoutMajor(selectedFacultyID));
         }
+
         private void FillFacultyCombobox(List<Faculty> listFaculties)
         {
             if (listFaculties == null || listFaculties.Count == 0)
@@ -125,3 +130,4 @@ namespace Lab05
         }
     }
 }
+
